@@ -1,0 +1,59 @@
+
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ทดสอบ Firebase</title>
+</head>
+<body>
+  <h1>ทดสอบ Firebase </h1>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ระบบบันทึกลูกค้า</title>
+  <script type="module" src="app.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    label { display: block; margin-top: 10px; }
+    input, select { width: 100%; padding: 5px; margin-top: 5px; }
+    button { margin-top: 15px; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>บันทึกข้อมูลลูกค้า</h1>
+  
+  <form id="customerForm">
+    <label>ชื่อลูกค้า: <input type="text" id="customerName" required></label>
+    <label>ที่อยู่: <input type="text" id="address" required></label>
+    <label>สินค้า: <input type="text" id="productName" required></label>
+    <label>ราคา: <input type="number" id="price" required></label>
+
+    <label>วิธีชำระเงิน:
+      <select id="paymentType" required>
+        <option value="cash">เงินสด</option>
+        <option value="installment">ผ่อน</option>
+      </select>
+    </label>
+
+    <div id="cashFields">
+      <label>จำนวนเงินที่จ่าย: <input type="number" id="paidAmount"></label>
+    </div>
+
+    <div id="installmentFields" style="display:none;">
+      <label>จ่ายงวดแรก: <input type="number" id="firstPayment"></label>
+      <label>จำนวนงวด: <input type="number" id="installments"></label>
+    </div>
+
+    <button type="submit">บันทึก</button>
+  </form>
+
+  <h2>รวมรายได้ทั้งหมด</h2>
+  <p id="totalIncome">0 บาท</p>
+</body>
+</html>
