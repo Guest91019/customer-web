@@ -132,3 +132,22 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
+
+import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+
+// const db = getFirestore(app);
+
+async function saveData() {
+  try {
+    await addDoc(collection(db, "orders"), {
+      name: document.getElementById("name").value,
+      product: document.getElementById("product").value,
+      amount: parseFloat(document.getElementById("amount").value),
+      date: new Date().toISOString()
+    });
+    alert("บันทึกข้อมูลสำเร็จ!");
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
