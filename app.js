@@ -1,12 +1,12 @@
-// firebase.js
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "YOUR_APP_ID"
-};
+
+// const firebaseConfig = {
+//   apiKey: "YOUR_API_KEY",
+//   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+//   projectId: "YOUR_PROJECT_ID",
+//   storageBucket: "YOUR_PROJECT_ID.appspot.com",
+//   messagingSenderId: "1234567890",
+//   appId: "YOUR_APP_ID"
+// };
 
 // เริ่มใช้งาน Firebase
 firebase.initializeApp(firebaseConfig);
@@ -110,3 +110,25 @@ async function updateIncome() {
 // โหลดรายได้ทันทีเมื่อเข้าเว็บ
 updateIncome();
 
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAj9gWD2Px4Fnh5x7dasYBOluTyMD6HUR0",
+  authDomain: "webjj-376d9.firebaseapp.com",
+  projectId: "webjj-376d9",
+  storageBucket: "webjj-376d9.firebasestorage.app",
+  messagingSenderId: "717462816877",
+  appId: "1:717462816877:web:3e1d003f38ab7c70b29764",
+  measurementId: "G-1PYYE92CPQ"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
