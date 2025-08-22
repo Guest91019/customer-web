@@ -1,6 +1,6 @@
 // firebase.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, addDoc  } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
@@ -15,3 +15,18 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { db };
+
+
+ // ฟังก์ชันบันทึกข้อมูล
+async function saveData(name, amount) {
+  try {
+    await addDoc(collection(db, "sales"), {
+      name: name,
+      amount: amount,
+      createdAt: new Date()
+    });
+    console.log("บันทึกข้อมูลสำเร็จ");
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
