@@ -1,121 +1,66 @@
-                          <!-- Page login -->
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>ระบบบริษัท</title>
-  <script type="module" src="app.js"></script>
+  <title>ระบบบริษัท - Login</title>
+  <script type="module">
+    import { register, login, saveRole, getRole, checkAuth } from "./js/app.js";
+
+    const emailEl = document.getElementById("email");
+    const passEl = document.getElementById("password");
+    const roleSection = document.getElementById("roleSection");
+
+    document.getElementById("registerBtn").addEventListener("click", () => {
+      register(emailEl.value, passEl.value).then(userCred => {
+        localStorage.setItem("uid", userCred.user.uid);
+        roleSection.classList.remove("hidden");
+      });
+    });
+
+    document.getElementById("saveRoleBtn").addEventListener("click", () => {
+      const uid = localStorage.getItem("uid");
+      const role = document.getElementById("roleSelect").value;
+      saveRole(uid, role).then(() => {
+        alert("บันทึกบทบาทสำเร็จ กรุณา login ใหม่");
+      });
+    });
+
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      login(emailEl.value, passEl.value).then(userCred => {
+        const uid = userCred.user.uid;
+        getRole(uid, (role) => {
+          if (role === "employee") location.href = "employee.html";
+          if (role === "manager") location.href = "manager.html";
+          if (role === "accountant") location.href = "accountant.html";
+          if (role === "ceo") location.href = "ceo.html";
+        });
+      });
+    });
+
+    checkAuth(user => {
+      if (user) console.log("Logged in:", user.email);
+    });
+  </script>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input, button, select { margin: 5px; padding: 8px; }
-    table { border-collapse: collapse; margin-top: 20px; width: 100%; }
-    table, th, td { border: 1px solid #ccc; padding: 8px; }
-    th { background: #f2f2f2; }
     .hidden { display: none; }
   </style>
 </head>
 <body>
   <h2>ระบบบริษัท</h2>
+  <input type="email" id="email" placeholder="อีเมล">
+  <input type="password" id="password" placeholder="รหัสผ่าน">
+  <button id="registerBtn">สมัคร</button>
+  <button id="loginBtn">ล็อกอิน</button>
 
-  <!-- สมัคร/ล็อกอิน -->
-  <div id="authSection">
-    <input type="email" id="email" placeholder="อีเมล">
-    <input type="password" id="password" placeholder="รหัสผ่าน">
-    <button id="registerBtn">สมัคร</button>
-    <button id="loginBtn">ล็อกอิน</button>
-  </div>
-
-  <!-- เลือกบทบาทตอนสมัคร -->
   <div id="roleSection" class="hidden">
     <h3>เลือกหน้าที่ของคุณ</h3>
     <select id="roleSelect">
       <option value="employee">กรอกข้อมูลลูกค้า</option>
-      <option value="manager">หัวหน้า (ตรวจสอบ/แก้ไข/ลบ)</option>
-      <option value="accountant">บัญชี (ดู/สรุป)</option>
-      <option value="ceo">CEO (ดูอย่างเดียว)</option>
+      <option value="manager">หัวหน้า</option>
+      <option value="accountant">บัญชี</option>
+      <option value="ceo">CEO</option>
     </select>
     <button id="saveRoleBtn">บันทึกบทบาท</button>
   </div>
-
-  <!-- ส่วนสำหรับ employee -->
- 
-  <!-- ตารางข้อมูล (manager/accountant/ceo จะเห็นด้วย) -->
-  
-
-
-                               <!-- Page2 -->
-
-
-<!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>บันทึกข้อมูลลูกค้า (Realtime Database)</title>
-  <script type="module" src="app.js"></script>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input, button { margin: 5px; padding: 8px; }
-    table { border-collapse: collapse; margin-top: 20px; width: 100%; }
-    table, th, td { border: 1px solid #ccc; padding: 8px; }
-    th { background: #f2f2f2; }
-  </style>
-</head>
-<body>
-  <h2>ฟอร์มบันทึกข้อมูลลูกค้า</h2>
-  
-  <input type="text" id="name" placeholder="ชื่อลูกค้า">
-  <input type="text" id="order" placeholder="รายการสั่งซื้อ">
-  <button id="saveBtn">บันทึก</button>
-
-  <h3>📋 ข้อมูลที่บันทึกแล้ว</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>ชื่อลูกค้า</th>
-        <th>รายการสั่งซื้อ</th>
-        <th>วันที่</th>
-      </tr>
-    </thead>
-    <tbody id="dataTable"></tbody>
-  </table>
 </body>
 </html>
-
-
-
-  <!-- Firebase App (ต้องโหลดตัวนี้ก่อน) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<!-- Firebase Authentication -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
-<!-- Firestore Database -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-
-<script>
-  // Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-</script>
-
-
-
-</body>
-</html>
-
-
-<form name="contact" method="POST" data-netlify="true">
-  <p>
-    <label>ชื่อ: <input type="text" name="name" required></label>
-  </p>
-  <p>
-    <label>อีเมล: <input type="email" name="email" required></label>
-  </p>
-  <p>
-    <label>ข้อความ: <textarea name="message"></textarea></label>
-  </p>
-  <p>
-    <button type="submit">ส่งข้อมูล</button>
-  </p>
-</form>
-
-
