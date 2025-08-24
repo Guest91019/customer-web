@@ -1,3 +1,51 @@
+<!-- Page login -->
+ <!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ระบบบริษัท</title>
+  <script type="module" src="app.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button, select { margin: 5px; padding: 8px; }
+    table { border-collapse: collapse; margin-top: 20px; width: 100%; }
+    table, th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #f2f2f2; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h2>ระบบบริษัท</h2>
+
+  <!-- สมัคร/ล็อกอิน -->
+  <div id="authSection">
+    <input type="email" id="email" placeholder="อีเมล">
+    <input type="password" id="password" placeholder="รหัสผ่าน">
+    <button id="registerBtn">สมัคร</button>
+    <button id="loginBtn">ล็อกอิน</button>
+  </div>
+
+  <!-- เลือกบทบาทตอนสมัคร -->
+  <div id="roleSection" class="hidden">
+    <h3>เลือกหน้าที่ของคุณ</h3>
+    <select id="roleSelect">
+      <option value="employee">กรอกข้อมูลลูกค้า</option>
+      <option value="manager">หัวหน้า (ตรวจสอบ/แก้ไข/ลบ)</option>
+      <option value="accountant">บัญชี (ดู/สรุป)</option>
+      <option value="ceo">CEO (ดูอย่างเดียว)</option>
+    </select>
+    <button id="saveRoleBtn">บันทึกบทบาท</button>
+  </div>
+
+  <!-- ส่วนสำหรับ employee -->
+ 
+  <!-- ตารางข้อมูล (manager/accountant/ceo จะเห็นด้วย) -->
+  
+
+
+<!-- Page2 -->
+
+
 <!DOCTYPE html>
 <html lang="th">
 <head>

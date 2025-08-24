@@ -114,6 +114,7 @@
 // Import Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // ตั้งค่า config ของคุณ (จาก Firebase Console)
 const firebaseConfig = {
@@ -130,6 +131,7 @@ const firebaseConfig = {
 // เริ่ม Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth();
 
 // ปุ่มบันทึก
 document.getElementById("saveBtn").addEventListener("click", () => {
@@ -169,3 +171,114 @@ onValue(ordersRef, (snapshot) => {
     tableBody.innerHTML += row;
   });
 });
+
+
+
+                             // Pagelogin
+
+
+
+// สมัคร
+document.getElementById("registerBtn").addEventListener("click", () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
+      document.getElementById("roleSection").classList.remove("hidden");
+      localStorage.setItem("uid", userCredential.user.uid);
+    })
+    .catch(err => alert(err.message));
+});
+
+// บันทึก role
+document.getElementById("saveRoleBtn").addEventListener("click", () => {
+  const role = document.getElementById("roleSelect").value;
+  const uid = localStorage.getItem("uid");
+  set(ref(db, "users/" + uid), { role: role });
+  alert("บันทึกบทบาทสำเร็จ กรุณา login ใหม่");
+});
+
+// ล็อกอิน
+document.getElementById("loginBtn").addEventListener("click", () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  signInWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
+      const uid = userCredential.user.uid;
+      onValue(ref(db, "users/" + uid), snapshot => {
+        if (snapshot.exists()) {
+          const role = snapshot.val().role;
+          loadRoleUI(role, uid);
+        } else {
+          alert("กรุณาเลือกบทบาทก่อนใช้งาน");
+          document.getElementById("roleSection").classList.remove("hidden");
+          localStorage.setItem("uid", uid);
+        }
+      });
+    })
+    .catch(err => alert(err.message));
+});
+
+// โหลด UI ตาม role
+function loadRoleUI(role, uid) {
+  if (role === "employee") {
+    document.getElementById("employeeSection").classList.remove("hidden");
+  }
+  if (["manager", "accountant", "ceo"].includes(role)) {
+    document.getElementById("dataSection").classList.remove("hidden");
+  }
+  if (role === "manager") {
+    document.getElementById("actionCol").classList.remove("hidden");
+  }
+  loadData(role);
+}
+
+// บันทึกข้อมูล (employee)
+document.getElementById("saveBtn")?.addEventListener("click", () => {
+  const name = document.getElementById("name").value;
+  const order = document.getElementById("order").value;
+  if (!name || !order) return alert("กรอกข้อมูลให้ครบ");
+  const newRef = push(ref(db, "orders"));
+  set(newRef, { customer: name, order: order, date: new Date().toLocaleString() });
+  document.getElementById("name").value = "";
+  document.getElementById("order").value = "";
+});
+
+// โหลดข้อมูล
+function loadData(role) {
+  const tableBody = document.getElementById("dataTable");
+  onValue(ref(db, "orders"), snapshot => {
+    tableBody.innerHTML = "";
+    snapshot.forEach(child => {
+      const key = child.key;
+      const data = child.val();
+      let row = `<tr>
+        <td>${data.customer}</td>
+        <td>${data.order}</td>
+        <td>${data.date}</td>`;
+      if (role === "manager") {
+        row += `<td>
+          <button onclick="editData('${key}','${data.customer}','${data.order}')">แก้ไข</button>
+          <button onclick="deleteData('${key}')">ลบ</button>
+        </td>`;
+      }
+      row += "</tr>";
+      tableBody.innerHTML += row;
+    });
+  });
+}
+
+// ฟังก์ชันแก้ไข/ลบ (สำหรับหัวหน้า)
+window.editData = (key, customer, order) => {
+  const newName = prompt("แก้ไขชื่อลูกค้า:", customer);
+  const newOrder = prompt("แก้ไขรายการ:", order);
+  if (newName && newOrder) {
+    update(ref(db, "orders/" + key), { customer: newName, order: newOrder });
+  }
+};
+
+window.deleteData = (key) => {
+  if (confirm("คุณแน่ใจว่าจะลบข้อมูลนี้?")) {
+    remove(ref(db, "orders/" + key));
+  }
+};
