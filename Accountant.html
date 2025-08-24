@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>3</title>
+  <script type="module">
+    import { checkAuth, saveOrder, logout } from "./js/app.js";
+
+    checkAuth(user => { if (!user) location.href = "index.html"; });
+
+    document.getElementById("saveBtn").addEventListener("click", () => {
+      const name = document.getElementById("name").value;
+      const order = document.getElementById("order").value;
+      saveOrder(name, order).then(() => alert("บันทึกเรียบร้อย"));
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => logout());
+  </script>
+</head>
+<body>
+  <h2>ฟอร์มกรอกข้อมูลลูกค้า</h2>
+  <input id="name" placeholder="ชื่อลูกค้า">
+  <input id="order" placeholder="รายการสั่งซื้อ">
+  <button id="saveBtn">บันทึก</button>
+  <button id="logoutBtn">ออกจากระบบ</button>
+</body>
+</html>
