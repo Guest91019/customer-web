@@ -9,145 +9,163 @@
 // };
 
 // เริ่มใช้งาน Firebase
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 
-// เรียกใช้งาน Firestore
-const db = firebase.firestore();
+// // เรียกใช้งาน Firestore
+// const db = firebase.firestore();
+
+// // import { db } from "./firebase.js";
+// // import { collection, addDoc } from "firebase/firestore";
+
+// // ตัวอย่างการบันทึกข้อมูล
+// async function saveCustomer() {
+//   try {
+//     await addDoc(collection(db, "customers"), {
+//       name: "ลูกค้าทดสอบ",
+//       email: "test@example.com",
+//       createdAt: new Date()
+//     });
+//     console.log("บันทึกข้อมูลเรียบร้อย");
+//   } catch (e) {
+//     console.error("Error adding document: ", e);
+//   }
+// }
+
+// saveCustomer();
+
+
 
 // import { db } from "./firebase.js";
-// import { collection, addDoc } from "firebase/firestore";
+// import { collection, addDoc, getDocs, query } from "firebase/firestore";
 
-// ตัวอย่างการบันทึกข้อมูล
-async function saveCustomer() {
-  try {
-    await addDoc(collection(db, "customers"), {
-      name: "ลูกค้าทดสอบ",
-      email: "test@example.com",
-      createdAt: new Date()
-    });
-    console.log("บันทึกข้อมูลเรียบร้อย");
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
+// const form = document.getElementById("customerForm");
+// const paymentType = document.getElementById("paymentType");
+// const cashFields = document.getElementById("cashFields");
+// const installmentFields = document.getElementById("installmentFields");
+// const totalIncomeEl = document.getElementById("totalIncome");
 
-saveCustomer();
+// // เปลี่ยนฟิลด์ตามการเลือกชำระเงิน
+// paymentType.addEventListener("change", () => {
+//   if (paymentType.value === "cash") {
+//     cashFields.style.display = "block";
+//     installmentFields.style.display = "none";
+//   } else {
+//     cashFields.style.display = "none";
+//     installmentFields.style.display = "block";
+//   }
+// });
 
+// // สมมติว่าคนคีย์ชื่อเก็บไว้แบบนี้ (ทีหลังทำ Auth ได้)
+// const currentUser = "พนักงานA";
 
+// // ฟอร์ม submit
+// form.addEventListener("submit", async (e) => {
+//   e.preventDefault();
 
-import { db } from "./firebase.js";
-import { collection, addDoc, getDocs, query } from "firebase/firestore";
+//   const data = {
+//     customerName: document.getElementById("customerName").value,
+//     address: document.getElementById("address").value,
+//     productName: document.getElementById("productName").value,
+//     price: parseFloat(document.getElementById("price").value),
+//     paymentType: paymentType.value,
+//     createdBy: currentUser,
+//     createdAt: new Date()
+//   };
 
-const form = document.getElementById("customerForm");
-const paymentType = document.getElementById("paymentType");
-const cashFields = document.getElementById("cashFields");
-const installmentFields = document.getElementById("installmentFields");
-const totalIncomeEl = document.getElementById("totalIncome");
+//   if (paymentType.value === "cash") {
+//     data.paidAmount = parseFloat(document.getElementById("paidAmount").value);
+//   } else {
+//     data.firstPayment = parseFloat(document.getElementById("firstPayment").value);
+//     data.installments = parseInt(document.getElementById("installments").value);
+//   }
 
-// เปลี่ยนฟิลด์ตามการเลือกชำระเงิน
-paymentType.addEventListener("change", () => {
-  if (paymentType.value === "cash") {
-    cashFields.style.display = "block";
-    installmentFields.style.display = "none";
-  } else {
-    cashFields.style.display = "none";
-    installmentFields.style.display = "block";
-  }
-});
+//   try {
+//     await addDoc(collection(db, "customers"), data);
+//     alert("บันทึกข้อมูลเรียบร้อย");
+//     form.reset();
+//     updateIncome();
+//   } catch (error) {
+//     console.error("Error adding document: ", error);
+//   }
+// });
 
-// สมมติว่าคนคีย์ชื่อเก็บไว้แบบนี้ (ทีหลังทำ Auth ได้)
-const currentUser = "พนักงานA";
+// // ฟังก์ชันรวมรายได้
+// async function updateIncome() {
+//   const q = query(collection(db, "customers"));
+//   const snapshot = await getDocs(q);
 
-// ฟอร์ม submit
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+//   let total = 0;
+//   snapshot.forEach((doc) => {
+//     const d = doc.data();
+//     if (d.paymentType === "cash" && d.paidAmount) {
+//       total += d.paidAmount;
+//     } else if (d.paymentType === "installment" && d.firstPayment) {
+//       total += d.firstPayment; // หรือจะบวกยอดรวมทั้งหมดก็ได้
+//     }
+//   });
 
-  const data = {
-    customerName: document.getElementById("customerName").value,
-    address: document.getElementById("address").value,
-    productName: document.getElementById("productName").value,
-    price: parseFloat(document.getElementById("price").value),
-    paymentType: paymentType.value,
-    createdBy: currentUser,
-    createdAt: new Date()
-  };
+//   totalIncomeEl.textContent = total + " บาท";
+// }
 
-  if (paymentType.value === "cash") {
-    data.paidAmount = parseFloat(document.getElementById("paidAmount").value);
-  } else {
-    data.firstPayment = parseFloat(document.getElementById("firstPayment").value);
-    data.installments = parseInt(document.getElementById("installments").value);
-  }
-
-  try {
-    await addDoc(collection(db, "customers"), data);
-    alert("บันทึกข้อมูลเรียบร้อย");
-    form.reset();
-    updateIncome();
-  } catch (error) {
-    console.error("Error adding document: ", error);
-  }
-});
-
-// ฟังก์ชันรวมรายได้
-async function updateIncome() {
-  const q = query(collection(db, "customers"));
-  const snapshot = await getDocs(q);
-
-  let total = 0;
-  snapshot.forEach((doc) => {
-    const d = doc.data();
-    if (d.paymentType === "cash" && d.paidAmount) {
-      total += d.paidAmount;
-    } else if (d.paymentType === "installment" && d.firstPayment) {
-      total += d.firstPayment; // หรือจะบวกยอดรวมทั้งหมดก็ได้
-    }
-  });
-
-  totalIncomeEl.textContent = total + " บาท";
-}
-
-// โหลดรายได้ทันทีเมื่อเข้าเว็บ
-updateIncome();
+// // โหลดรายได้ทันทีเมื่อเข้าเว็บ
+// updateIncome();
 
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// Import Firebase SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// ตั้งค่า config ของคุณ (จาก Firebase Console)
 const firebaseConfig = {
-  apiKey: "AIzaSyAj9gWD2Px4Fnh5x7dasYBOluTyMD6HUR0",
+  apiKey: "AIzaSyAjgWD2Px4Fnh5x7dasYBO1uTyMD6HUR0",
   authDomain: "webjj-376d9.firebaseapp.com",
+  databaseURL: "https://webjj-376d9-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "webjj-376d9",
-  storageBucket: "webjj-376d9.firebasestorage.app",
+  storageBucket: "webjj-376d9.appspot.com",
   messagingSenderId: "717462816877",
   appId: "1:717462816877:web:3e1d003f38ab7c70b29764",
-  measurementId: "G-1PYYE92CPQ"
+  measurementId: "G-1PY9E92CPQ"
 };
 
-// Initialize Firebase
+// เริ่ม Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getDatabase(app);
 
+// ปุ่มบันทึก
+document.getElementById("saveBtn").addEventListener("click", () => {
+  const name = document.getElementById("name").value;
+  const order = document.getElementById("order").value;
 
-import { getFirestore, collection, addDoc } from "firebase/firestore"; 
-
-// const db = getFirestore(app);
-
-async function saveData() {
-  try {
-    await addDoc(collection(db, "orders"), {
-      name: document.getElementById("name").value,
-      product: document.getElementById("product").value,
-      amount: parseFloat(document.getElementById("amount").value),
-      date: new Date().toISOString()
-    });
-    alert("บันทึกข้อมูลสำเร็จ!");
-  } catch (e) {
-    console.error("Error adding document: ", e);
+  if (name.trim() === "" || order.trim() === "") {
+    alert("กรุณากรอกข้อมูลให้ครบ");
+    return;
   }
-}
+
+  // push ข้อมูลเข้า DB
+  const newRef = push(ref(db, "orders"));
+  set(newRef, {
+    customer: name,
+    order: order,
+    date: new Date().toLocaleString()
+  });
+
+  document.getElementById("name").value = "";
+  document.getElementById("order").value = "";
+});
+
+// แสดงข้อมูลจาก Realtime Database
+const tableBody = document.getElementById("dataTable");
+const ordersRef = ref(db, "orders");
+
+onValue(ordersRef, (snapshot) => {
+  tableBody.innerHTML = ""; // ล้างก่อน
+  snapshot.forEach(childSnapshot => {
+    const data = childSnapshot.val();
+    const row = `<tr>
+      <td>${data.customer}</td>
+      <td>${data.order}</td>
+      <td>${data.date}</td>
+    </tr>`;
+    tableBody.innerHTML += row;
+  });
+});

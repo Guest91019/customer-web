@@ -2,48 +2,37 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>ระบบบันทึกลูกค้า</title>
+  <title>บันทึกข้อมูลลูกค้า (Realtime Database)</title>
   <script type="module" src="app.js"></script>
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    label { display: block; margin-top: 10px; }
-    input, select { width: 100%; padding: 5px; margin-top: 5px; }
-    button { margin-top: 15px; padding: 10px; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, button { margin: 5px; padding: 8px; }
+    table { border-collapse: collapse; margin-top: 20px; width: 100%; }
+    table, th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background: #f2f2f2; }
   </style>
 </head>
 <body>
-  <h1>ลูกค้าครั้งที่1</h1>
-  <h2>ลูกค้าครั้งที่2</h2>
-  <h2>ลูกค้าครั้งที่3</h2>
-  <h2>ลูกค้าครั้งที่4</h2>
+  <h2>ฟอร์มบันทึกข้อมูลลูกค้า</h2>
   
-  <form id="customerForm">
-    <label>ชื่อลูกค้า: <input type="text" id="customerName" required></label>
-    <label>ที่อยู่: <input type="text" id="address" required></label>
-    <label>สินค้า: <input type="text" id="productName" required></label>
-    <label>ราคา: <input type="number" id="price" required></label>
+  <input type="text" id="name" placeholder="ชื่อลูกค้า">
+  <input type="text" id="order" placeholder="รายการสั่งซื้อ">
+  <button id="saveBtn">บันทึก</button>
 
-    <label>วิธีชำระเงิน:
-      <select id="paymentType" required>
-        <option value="cash">เงินสด</option>
-        <option value="installment">ผ่อน</option>
-      </select>
-    </label>
+  <h3>📋 ข้อมูลที่บันทึกแล้ว</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ชื่อลูกค้า</th>
+        <th>รายการสั่งซื้อ</th>
+        <th>วันที่</th>
+      </tr>
+    </thead>
+    <tbody id="dataTable"></tbody>
+  </table>
+</body>
+</html>
 
-    <div id="cashFields">
-      <label>จำนวนเงินที่จ่าย: <input type="number" id="paidAmount"></label>
-    </div>
-
-    <div id="installmentFields" style="display:none;">
-      <label>จ่ายงวดแรก: <input type="number" id="firstPayment"></label>
-      <label>จำนวนงวด: <input type="number" id="installments"></label>
-    </div>
-
-    <button type="submit">บันทึก</button>
-  </form>
-
-  <h2>รวมรายได้</h2>
-  <p id="totalIncome">0 บาท</p>
 
 
   <!-- Firebase App (ต้องโหลดตัวนี้ก่อน) -->
