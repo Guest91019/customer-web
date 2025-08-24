@@ -282,3 +282,32 @@ window.deleteData = (key) => {
     remove(ref(db, "orders/" + key));
   }
 };
+
+
+
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// ... firebaseConfig + initializeApp ...
+
+// const auth = getAuth();
+// const db = getDatabase();
+
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    // ถ้าไม่ login → กลับไปหน้า login.html
+    window.location.href = "login.html";
+  } else {
+    // TODO: โหลด role ของ user แล้วตรวจสอบว่าตรงกับหน้าปัจจุบันไหม
+  }
+});
+
+document.getElementById("saveBtn")?.addEventListener("click", () => {
+  const name = document.getElementById("name").value;
+  const order = document.getElementById("order").value;
+  const newRef = push(ref(db, "orders"));
+  set(newRef, { customer: name, order: order, date: new Date().toLocaleString() });
+  alert("บันทึกข้อมูลแล้ว");
+});
+
+window.logout = () => signOut(auth);
