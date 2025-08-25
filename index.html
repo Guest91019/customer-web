@@ -66,7 +66,7 @@
 </html> -->
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -74,4 +74,49 @@
   <button id="loginBtn">Login</button>
   <button id="signinBtn">Signin</button>
 </head>
-<body style="background-color:rgb(14, 23, 125);">
+<body style="background-color:rgb(14, 23, 125);"> -->
+
+
+  <!DOCTYPE html>
+<html>
+<head>
+<title>Two Centered Buttons</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 20px; /* Adds space between the buttons */
+  }
+
+  .my-button {
+    font-size: 24px; /* Makes the button text larger */
+    padding: 15px 30px; /* Increases the button size */
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    background-color: #007BFF;
+    color: white;
+    transition: background-color 0.3s;
+  }
+
+  .my-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<div class="button-container">
+  <button class="my-button">ปุ่มที่ 1</button>
+  <button class="my-button">ปุ่มที่ 2</button>
+</div>
+
+</body>
+</html>
