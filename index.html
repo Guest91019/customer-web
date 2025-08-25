@@ -71,16 +71,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <!-- <style>
-    .button-container {
-
+  <style>
+    body {
+      background-color:#282A3A;
     }
-  </style> -->
+    .login {
+      background-color: #735F32;
+      color: #000000;
+      font-size: 24px;
+      padding: 15px 30px;
+      border: none;
+    }
+    .login:hover {
+    background-color: #0056b3;
+  }
+  </style>
 </head>
 <body>
-  <button class="my-button">Login</button>
-  <button class="my-button">Signin</button>
+  <button id="loginBtn">Login</button>
+  <button id="loginBtn">Signin</button>
 </body>
+  
+
 
 
   <!-- <!DOCTYPE html>
@@ -104,7 +116,7 @@
   .my-button {
     font-size: 24px; /* Makes the button text larger */
     padding: 15px 30px; /* Increases the button size */
-    cursor: pointer;
+    cursor: pointer;        ---------
     border: none;
     border-radius: 8px;
     background-color: #007BFF;
