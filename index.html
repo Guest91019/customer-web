@@ -158,7 +158,7 @@
     document.getElementById("saveBtn").addEventListener("click", () => {
       const name = document.getElementById("name").value;
       const order = document.getElementById("order").value;
-      saveOrder(name, order).then(() => alert("บันทึกเรียบร้อย"));
+      saveBtn(name, order).then(() => alert("บันทึกเรียบร้อย"));
     });
 
     document.getElementById("logoutBtn").addEventListener("click", () => logout());
