@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -23,5 +23,89 @@
   <input id="order" placeholder="รายการสั่งซื้อ">
   <button id="saveBtn">บันทึก</button>
   <button id="logoutBtn">ออกจากระบบ</button>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ค้นหาลูกค้า</title>
+  <script type="module">
+    // ------------------ Firebase Config ------------------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAjgWD2Px4Fnh5x7dasYBO1uTyMD6HUR0",
+  authDomain: "webjj-376d9.firebaseapp.com",
+  databaseURL: "https://webjj-376d9-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "webjj-376d9",
+  storageBucket: "webjj-376d9.appspot.com",
+  messagingSenderId: "717462816877",
+  appId: "1:717462816877:web:3e1d003f38ab7c70b29764",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // ------------------ ฟังก์ชันค้นหา ------------------
+    async function searchData() {
+      const keyword = document.getElementById("keyword").value.trim().toLowerCase();
+      const dateKeyword = document.getElementById("dateKeyword").value.trim();
+
+      const dbRef = ref(db);
+      const snapshot = await get(child(dbRef, "customers")); // customers = ชื่อตาราง
+      let resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      if (snapshot.exists()) {
+        let customers = snapshot.val();
+        let resultArray = Object.values(customers);
+
+        // filter ข้อมูล
+        let filtered = resultArray.filter(cust => {
+          let matchKeyword = !keyword || (
+            (cust.firstname && cust.firstname.toLowerCase().includes(keyword)) ||
+            (cust.lastname && cust.lastname.toLowerCase().includes(keyword)) ||
+            (cust.address && cust.address.toLowerCase().includes(keyword))
+          );
+
+          let matchDate = !dateKeyword || (cust.date && cust.date.includes(dateKeyword));
+
+          return matchKeyword && matchDate;
+        });
+
+        // แสดงผล
+        if (filtered.length > 0) {
+          filtered.forEach((cust, index) => {
+            resultsDiv.innerHTML += `
+              <div style="border:1px solid #ccc; margin:5px; padding:5px;">
+                <b>#${index + 1}</b><br>
+                ชื่อ: ${cust.firstname} ${cust.lastname}<br>
+                ที่อยู่: ${cust.address}<br>
+                วันที่: ${cust.date}
+              </div>
+            `;
+          });
+        } else {
+          resultsDiv.innerHTML = "<p>ไม่พบข้อมูล</p>";
+        }
+
+      } else {
+        resultsDiv.innerHTML = "<p>ยังไม่มีข้อมูลในระบบ</p>";
+      }
+    }
+
+    window.searchData = searchData;
+  </script>
+</head>
+<body>
+  <h2>ค้นหาลูกค้า</h2>
+  <input type="text" id="keyword" placeholder="พิมพ์ชื่อ / นามสกุล / ที่อยู่">
+  <input type="text" id="dateKeyword" placeholder="ค้นหาตามวันที่ (yyyy-mm-dd)">
+  <button onclick="searchData()">ค้นหา</button>
+  <div id="results" style="margin-top:20px;"></div>
 </body>
 </html>
