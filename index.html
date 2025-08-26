@@ -64,7 +64,73 @@
   </div>
 </body>
 </html> -->
-<!-- 
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>เพิ่มลูกค้า</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    // ------------------ Firebase Config ------------------
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // ------------------ ฟังก์ชันบันทึก ------------------
+    function saveCustomer() {
+      const firstname = document.getElementById("firstname").value;
+      const lastname = document.getElementById("lastname").value;
+      const address = document.getElementById("address").value;
+      const date = document.getElementById("date").value;
+
+      if (!firstname || !lastname) {
+        alert("กรุณากรอกชื่อและนามสกุล");
+        return;
+      }
+
+      const newRef = push(ref(db, "customers"));
+      set(newRef, {
+        firstname: firstname,
+        lastname: lastname,
+        address: address,
+        date: date
+      })
+      .then(() => {
+        alert("บันทึกข้อมูลเรียบร้อย ✅");
+        document.getElementById("customerForm").reset();
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("เกิดข้อผิดพลาด ❌");
+      });
+    }
+
+    window.saveCustomer = saveCustomer;
+  </script>
+</head>
+<body>
+  <h2>เพิ่มลูกค้าใหม่</h2>
+  <form id="customerForm" onsubmit="event.preventDefault(); saveCustomer();">
+    <input type="text" id="firstname" placeholder="ชื่อ"><br><br>
+    <input type="text" id="lastname" placeholder="นามสกุล"><br><br>
+    <input type="text" id="address" placeholder="ที่อยู่"><br><br>
+    <input type="date" id="date"><br><br>
+    <button type="submit">บันทึก</button>
+  </form>
+</body>
+</html>
+
 
 <!DOCTYPE html>
 <html lang="th">
@@ -96,7 +162,12 @@
   <button class="loginBtn">Login</button>
   <button class="loginBtn">Signin</button>
 </body>
-   -->
+  <a href="Manager.html">
+    <button>ค้นหา</button>
+  </a>
+
+
+  
 
 
 
@@ -145,36 +216,88 @@
 </html> -->
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>2</title>
+  <title>ค้นหาลูกค้า</title>
   <script type="module">
-    import { checkAuth, saveOrder, logout } from "./js/app.js";
+    // ------------------ Firebase Config ------------------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    checkAuth(user => { if (!user) location.href = "index.html"; });
+    const firebaseConfig = {
+      apiKey: "AIzaSyAjgWD2Px4Fnh5x7dasYBO1uTyMD6HUR0",
+  authDomain: "webjj-376d9.firebaseapp.com",
+  databaseURL: "https://webjj-376d9-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "webjj-376d9",
+  storageBucket: "webjj-376d9.appspot.com",
+  messagingSenderId: "717462816877",
+  appId: "1:717462816877:web:3e1d003f38ab7c70b29764",
+    };
 
-    document.getElementById("saveBtn").addEventListener("click", () => {
-      const name = document.getElementById("name").value;
-      const order = document.getElementById("order").value;
-      saveBtn(name, order).then(() => alert("บันทึกเรียบร้อย"));
-    });
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-    document.getElementById("logoutBtn").addEventListener("click", () => logout());
+    // ------------------ ฟังก์ชันค้นหา ------------------
+    async function searchData() {
+      const keyword = document.getElementById("keyword").value.trim().toLowerCase();
+      const dateKeyword = document.getElementById("dateKeyword").value.trim();
+
+      const dbRef = ref(db);
+      const snapshot = await get(child(dbRef, "customers")); // customers = ชื่อตาราง
+      let resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      if (snapshot.exists()) {
+        let customers = snapshot.val();
+        let resultArray = Object.values(customers);
+
+        // filter ข้อมูล
+        let filtered = resultArray.filter(cust => {
+          let matchKeyword = !keyword || (
+            (cust.firstname && cust.firstname.toLowerCase().includes(keyword)) ||
+            (cust.lastname && cust.lastname.toLowerCase().includes(keyword)) ||
+            (cust.address && cust.address.toLowerCase().includes(keyword))
+          );
+
+          let matchDate = !dateKeyword || (cust.date && cust.date.includes(dateKeyword));
+
+          return matchKeyword && matchDate;
+        });
+
+        // แสดงผล
+        if (filtered.length > 0) {
+          filtered.forEach((cust, index) => {
+            resultsDiv.innerHTML += `
+              <div style="border:1px solid #ccc; margin:5px; padding:5px;">
+                <b>#${index + 1}</b><br>
+                ชื่อ: ${cust.firstname} ${cust.lastname}<br>
+                ที่อยู่: ${cust.address}<br>
+                วันที่: ${cust.date}
+              </div>
+            `;
+          });
+        } else {
+          resultsDiv.innerHTML = "<p>ไม่พบข้อมูล</p>";
+        }
+
+      } else {
+        resultsDiv.innerHTML = "<p>ยังไม่มีข้อมูลในระบบ</p>";
+      }
+    }
+
+    window.searchData = searchData;
   </script>
 </head>
 <body>
-  <h2>ฟอร์มกรอกข้อมูลลูกค้า</h2>
-  <input id="name" placeholder="ชื่อลูกค้า">
-  <input id="order" placeholder="รายการสั่งซื้อ">
-  <button id="saveBtn">บันทึก</button>
-  <button id="logoutBtn">ออกจากระบบ</button>
+  <h2>ค้นหาลูกค้า</h2>
+  <input type="text" id="keyword" placeholder="พิมพ์ชื่อ / นามสกุล / ที่อยู่">
+  <input type="text" id="dateKeyword" placeholder="ค้นหาตามวันที่ (yyyy-mm-dd)">
+  <button onclick="searchData()">ค้นหา</button>
+  <div id="results" style="margin-top:20px;"></div>
 </body>
-</html>
+</html> -->
 
 
 
-<a href="Manager.html">
-    <button>ค้นหา</button>
-  </a>
