@@ -62,10 +62,10 @@
 
       if (snapshot.exists()) {
         let customers = snapshot.val();
-        let resultArray = Object.values(customers);
+        
 
         // filter ข้อมูล
-        let filtered = resultArray.filter(cust => {
+Object.entries(customers).forEach(([custId, cust], index) => {
           let matchKeyword = !keyword || (
             (cust.firstname && cust.firstname.toLowerCase().includes(keyword)) ||
             (cust.lastname && cust.lastname.toLowerCase().includes(keyword)) ||
@@ -74,29 +74,37 @@
 
           let matchDate = !dateKeyword || (cust.date && cust.date.includes(dateKeyword));
 
-          return matchKeyword && matchDate;
-        });
-
-        // แสดงผล
-        if (filtered.length > 0) {
-          filtered.forEach((cust, index) => {
+          if (matchKeyword && matchDate) {
             resultsDiv.innerHTML += `
               <div style="border:1px solid #ccc; margin:5px; padding:5px;">
                 <b>#${index + 1}</b><br>
                 ชื่อ: ${cust.firstname} ${cust.lastname}<br>
                 ที่อยู่: ${cust.address}<br>
-                วันที่: ${cust.date}
+                วันที่: ${cust.date}<br>
+                <button onclick="toggleDetail('${custId}')">ดูรายละเอียด</button>
+                <div id="detail-${custId}" style="display:none; margin-top:10px; padding:5px; border-top:1px solid #ddd;">
+                  ${cust.purchases ? cust.purchases.map(p => `
+                    <p>- ${p.item}: ${p.amount} บาท</p>
+                  `).join("") : "<p>ไม่มีข้อมูลการซื้อ</p>"}
+                </div>
               </div>
             `;
-          });
-        } else {
-          resultsDiv.innerHTML = "<p>ไม่พบข้อมูล</p>";
-        }
-
+          }
+        });
       } else {
         resultsDiv.innerHTML = "<p>ยังไม่มีข้อมูลในระบบ</p>";
       }
     }
+
+    // ------------------ toggle โชว์/ซ่อน ------------------
+    window.toggleDetail = function(id) {
+      const detailDiv = document.getElementById("detail-" + id);
+      if (detailDiv.style.display === "none") {
+        detailDiv.style.display = "block";
+      } else {
+        detailDiv.style.display = "none";
+      }
+    };
 
     window.searchData = searchData;
   </script>

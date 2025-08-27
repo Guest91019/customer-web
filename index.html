@@ -120,16 +120,36 @@
   </script>
 </head>
 <body>
-  <img src="Logo.png" alt="Logo" width="378" height="344" justify-content="center";
-      align-items="center";>
+  <div class="container">
+  <img src="Logo.png" alt="Logo" width="189" height="172" ;>
+</div>
 
 
   <h2>เพิ่มลูกค้าใหม่</h2>
   <form id="customerForm" onsubmit="event.preventDefault(); saveCustomer();">
     <input type="text" id="firstname" placeholder="ชื่อ"><br><br>
     <input type="text" id="lastname" placeholder="นามสกุล"><br><br>
+    <input type="text" id="lastname" placeholder="แผนก"><br><br>
     <input type="text" id="address" placeholder="ที่อยู่"><br><br>
+    <input type="text" id="lastname" placeholder="สินค้า"><br><br>
+    <input type="text" id="lastname" placeholder="ราคา"><br><br>
+    <input type="text" id="lastname" placeholder="ผ่อน"><br><br>
+    <input type="text" id="lastname" placeholder="เดือนละ"><br><br>
+    <input type="text" id="lastname" placeholder="วันที่"><br><br>
+    <input type="text" id="lastname" placeholder="เบอร์"><br><br>
     <input type="date" id="date"><br><br>
+
+    <!-- 
+    
+    สินค้า
+    แผนก
+    
+    ราคา
+    ผ่อน
+    เดือนละ
+    วันที่
+    เบอร์
+     -->
     <button type="submit">บันทึก</button>
   </form>
 </body>
