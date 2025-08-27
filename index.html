@@ -120,12 +120,21 @@
   </script>
 </head>
 <body>
+  <style>
+  .container {
+    display: flex;
+    justify-content: center; /* จัดตำแหน่งรูปภาพในแนวนอนให้อยู่ตรงกลาง */
+    height: 100%; /* ทำให้ container มีความสูงเต็มหน้าจอ */
+  }
+  .headline {
+    text-align:center;
+  }
+  </style>
+<body>
   <div class="container">
-  <img src="Logo.png" alt="Logo" width="189" height="172" ;>
-</div>
-
-
-  <h2>เพิ่มลูกค้าใหม่</h2>
+    <img src="Logo.png" alt="Logo" width="189" height="172" ;>
+  </div>
+<h1 class="headline">บันทึกข้อมูลการซื้อ</h1>
   <form id="customerForm" onsubmit="event.preventDefault(); saveCustomer();">
     <input type="text" id="firstname" placeholder="ชื่อ"><br><br>
     <input type="text" id="lastname" placeholder="นามสกุล"><br><br>
@@ -152,6 +161,16 @@
      -->
     <button type="submit">บันทึก</button>
   </form>
+
+
+  <h2>ค้นหาลูกค้า</h2>
+  <input type="text" id="keyword" placeholder="พิมพ์ชื่อ / นามสกุล / ที่อยู่">
+  <input type="text" id="dateKeyword" placeholder="ค้นหาตามวันที่ (yyyy-mm-dd)">
+  <button onclick="searchData()">ค้นหา</button>
+  <div id="results" style="margin-top:20px;"></div>
+
+
+
 </body>
 </html>
 
