@@ -133,7 +133,11 @@
     background-color:#EAD8B1;
     
   }
-  
+  .wan{
+  position: absolute; /* กำหนดตำแหน่งสัมพัทธ์กับองค์ประกอบแม่ (parent element) ที่มี position เป็น relative */
+  bottom: 20px; /* กำหนดระยะห่างจากขอบล่าง 20 พิกเซล */
+  right: 20px;
+  }
 .btn {
   background-color: #6A9AB0;
   border: 3px solid #001F3F;
@@ -298,7 +302,10 @@
     </tbody>
   </table>
   <br>
-  
+  <div class="wan">
+  <label for="createdDate">วันที่สร้าง</label>
+  <input type="text" id="createdDate">
+</div>
   <button type="submit" class="btn">ส่งข้อมูล</button>
   
   <a href="https://www.w3schools.com" class="btn">ไปหน้าต่อไป</a>
