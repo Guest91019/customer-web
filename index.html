@@ -133,13 +133,14 @@
     background-color:#EAD8B1;
     
   }
+  
 .btn {
   background-color: #6A9AB0;
-  
-  color:001F3F;
+  border: 3px solid #001F3F;
+  color:#001F3F;
   padding: 15px 32px;
   text-align: center;
-  font-size: 24px;
+  font-size: 18px;
   margin: 4px 2px;
   text-decoration: none;
   display: inline-block;
@@ -168,9 +169,7 @@
     padding: 8px; /* เพิ่มระยะห่างภายในช่อง */
     text-align: Center;
   }
-  th {
-    background-color: #f2f2f2;
-  }
+  
   input {
     
     background-color: transparent;
@@ -211,23 +210,23 @@
   <form id="customerForm" onsubmit="event.preventDefault(); saveCustomer();">
     <div class="input1">
   <div class="input2">
-    <label for="fname">ชื่อ</label>
+    <label for="fname"><b>ชื่อ</b></label>
     <input type="text" id="fname" name="firstname">
   </div>
   <div class="input2">
-    <label for="lname">นามสกุล</label>
+    <label for="lname"><b>นามสกุล</b></label>
     <input type="text" id="lname" name="lastname">
   </div>
   <div class="input2">
-    <label for="fname">อาชีพ</label>
+    <label for="fname"><b>อาชีพ</b></label>
     <input type="text" id="fname" name="firstname">
   </div>
   <div class="input2">
-    <label for="fname">ที่อยู่</label>
+    <label for="fname"><b>ที่อยู่</b></label>
     <input type="text" id="fname" name="firstname">
   </div>
   <div class="input2">
-    <label for="fname">เบอร์</label>
+    <label for="fname"><b>เบอร์</b></label>
     <input type="text" id="fname" name="firstname">
   </div>
 </div>
@@ -259,12 +258,50 @@
         <td><input type="text" class="tarang" name="product_name_2"></td>
         <td><input type="number" class="tarang" name="quantity_2"></td>
         <td><input type="number" class="tarang" name="price_2"></td>
+        <td><input type="number" class="tarang" name="price_2"></td>
+        <td><input type="number" class="tarang" name="price_2"></td>
+        <td><input type="date" class="tarang" name="price_2"></td>
+      </tr>
+      <tr>
+        <td><input type="text" class="tarang" name="product_name_3"></td>
+        <td><input type="number" class="tarang" name="quantity_3"></td>
+        <td><input type="number" class="tarang" name="price_3"></td>
+        <td><input type="number" class="tarang" name="price_3"></td>
+        <td><input type="number" class="tarang" name="price_3"></td>
+        <td><input type="date" class="tarang" name="price_3"></td>
+      </tr>
+      <tr>
+        <td><input type="text" class="tarang" name="product_name_4"></td>
+        <td><input type="number" class="tarang" name="quantity_4"></td>
+        <td><input type="number" class="tarang" name="price_4"></td>
+        <td><input type="number" class="tarang" name="price_4"></td>
+        <td><input type="number" class="tarang" name="price_4"></td>
+        <td><input type="date" class="tarang" name="price_4"></td>
+      </tr>
+      <tr>
+        <td><input type="text" class="tarang" name="product_name_5"></td>
+        <td><input type="number" class="tarang" name="quantity_5"></td>
+        <td><input type="number" class="tarang" name="price_5"></td>
+        <td><input type="number" class="tarang" name="price_5"></td>
+        <td><input type="number" class="tarang" name="price_5"></td>
+        <td><input type="date" class="tarang" name="price_5"></td>
+      </tr>
+      <tr>
+        <td><input type="text" class="tarang" name="product_name_6"></td>
+        <td><input type="number" class="tarang" name="quantity_6"></td>
+        <td><input type="number" class="tarang" name="price_6"></td>
+        <td><input type="number" class="tarang" name="price_6"></td>
+        <td><input type="number" class="tarang" name="price_6"></td>
+        <td><input type="date" class="tarang" name="price_6"></td>
       </tr>
     </tbody>
   </table>
   <br>
+  
   <button type="submit" class="btn">ส่งข้อมูล</button>
-  <a href="Manager.html"><button class="btn">ไปหน้าต่อไป</button></a>
+  
+  <a href="https://www.w3schools.com" class="btn">ไปหน้าต่อไป</a>
+  </form>
 </body>
 </html>
 
