@@ -110,10 +110,11 @@ Object.entries(customers).forEach(([custId, cust], index) => {
   </script>
 </head>
 <body>
-  <h2>ค้นหาลูกค้า</h2>
-  <input type="text" id="keyword" placeholder="พิมพ์ชื่อ / นามสกุล / ที่อยู่">
-  <input type="text" id="dateKeyword" placeholder="ค้นหาตามวันที่ (yyyy-mm-dd)">
-  <button onclick="searchData()">ค้นหา</button>
-  <div id="results" style="margin-top:20px;"></div>
+  <div>
+   <h2>ข้อมูลการซื้อ</h2>
+   <input type="text" id="keyword" placeholder="ชื่อ-นามสกุล-ที่อยู่">
+   <input type="text" id="dateKeyword" placeholder="dd-mm-yyy">
+   <button onclick="searchData()" class="btn">ค้นหา</button>
+  </div>
 </body>
 </html>
