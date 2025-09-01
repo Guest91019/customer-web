@@ -121,94 +121,180 @@
 </head>
 <body>
   <style>
-  .container {
-    display: flex;
-    justify-content: center; /* จัดตำแหน่งรูปภาพในแนวนอนให้อยู่ตรงกลาง */
-    height: 100%; /* ทำให้ container มีความสูงเต็มหน้าจอ */
-  }
-  .headline {
-    text-align:center;
-  }
   body {
-    background-color:#EAD8B1;
-    
-  }
-  .wan{
-  position: absolute; /* กำหนดตำแหน่งสัมพัทธ์กับองค์ประกอบแม่ (parent element) ที่มี position เป็น relative */
-  bottom: 20px; /* กำหนดระยะห่างจากขอบล่าง 20 พิกเซล */
-  right: 20px;
-  }
-.btn {
-  background-color: #6A9AB0;
-  border: 3px solid #001F3F;
-  color:#001F3F;
-  padding: 15px 32px;
-  text-align: center;
-  font-size: 18px;
-  margin: 4px 2px;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  border-radius:8px;
+  font-family: "Tahoma", sans-serif;
+  background: #f4e1b1; /* สีครีม */
+  margin: 0;
+  padding: 20px;
 }
- .btn:hover {
-   background-color: #3a6d8c
- }
-  .tarang {
-    border: none;
-  }
-  .tarang:focus {
-    outline: none; /* ลบเส้นขอบสีดำที่ปรากฏขึ้นเมื่อคลิก */
-    
-  }
-  .first {
-     background-color: #6A9AB0;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse; /* ทำให้เส้นขอบติดกัน */
-  }
-  th, td {
-    border: 3px solid #001F3F; /* เพิ่มเส้นขอบสีเทา */
-    padding: 8px; /* เพิ่มระยะห่างภายในช่อง */
-    text-align: Center;
-  }
-  
-  input {
-    
-    background-color: transparent;
-    box-sizing: border-box; /* ทำให้ input ไม่ล้นตาราง */
-  }
-  .mono {
-    
-  
-  text-decoration: none;
-  display: inline-block;
-  
-  
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  background: #fff8e7;
+  padding: 20px 40px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 100px;
+}
+
+h1 {
+  margin: 10px 0;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.customer-info .row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.customer-info label {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.customer-info input {
+  width: 90%;
+  padding: 5px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: #fff;
+}
+
+thead {
+  background: #5fa3c7; /* ฟ้า */
+  color: #fff;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+td input[type="date"] {
+  border: none;
+  padding: 5px;
+}
+
+.actions {
+  text-align: right;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
   cursor: pointer;
-  }
-  .container {
-    display: flex;
-    justify-content: center; /* จัดตำแหน่งรูปภาพในแนวนอนให้อยู่ตรงกลาง */
-    height: 100%; /* ทำให้ container มีความสูงเต็มหน้าจอ */
-  }
-  .headline {
-    text-align:center;
-  }
-  .input1 {
-    display: flex; /* ใช้ Flexbox เพื่อจัดเรียงองค์ประกอบในแนวนอน */
-    gap: 20px;    /* เพิ่มระยะห่างระหว่างช่อง */
-    justify-content: center;
-  }
+  margin-left: 10px;
+  font-size: 1rem;
+}
 
-  .input2 {
-    display: flex;
-    flex-direction: column; /* จัดให้ข้อความนำและช่องใส่ข้อมูลอยู่ในแนวตั้ง */
-  }
+.btn-primary {
+  background: #5fa3c7;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #ddd;
+  color: #000;
+}
+
+footer {
+  text-align: right;
+  margin-top: 15px;
+}
+
   </style>
-
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>บันทึกข้อมูลการซื้อ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
   <div class="container">
+
+    <!-- Header -->
+    <header>
+      <img src="logo.png" alt="BRM Logo" class="logo">
+      <h1>บันทึกข้อมูลการซื้อ</h1>
+    </header>
+
+    <!-- Customer Info -->
+    <section class="customer-info">
+      <div class="row">
+        <label>ชื่อ <input type="text"></label>
+        <label>นามสกุล <input type="text"></label>
+        <label>อาชีพ <input type="text"></label>
+      </div>
+      <div class="row">
+        <label>ที่อยู่ <input type="text"></label>
+        <label>เบอร์ <input type="text"></label>
+        <label>สินค้า <input type="text"></label>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>งวด</th>
+            <th>วันที่</th>
+            <th>จำนวน</th>
+            <th>คงเหลือ</th>
+            <th>ผู้รับเงิน</th>
+            <th>หมายเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td><td><input type="date"></td><td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td></td><td><input type="date"></td><td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td></td><td><input type="date"></td><td></td><td></td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Buttons -->
+    <div class="actions">
+      <button class="btn-primary">ส่งข้อมูล</button>
+      <button class="btn-secondary">ไปหน้าต่อไป</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      วันที่สร้าง <input type="date">
+    </footer>
+  </div>
+</body>
+</html>
+
+  <!-- <div class="container">
     <img src="Logo.png" alt="Logo" width="189" height="172" ;>
   </div>
 <h1 class="headline">บันทึกข้อมูลการซื้อ</h1>
@@ -315,176 +401,77 @@
   <a href="Manager.html" class="btn">ไปหน้าต่อไป</a>
   </form>
 </body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>บันทึกข้อมูลการซื้อ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <header>
+      <img src="logo.png" alt="BRM Logo" class="logo">
+      <h1>บันทึกข้อมูลการซื้อ</h1>
+    </header>
+
+    <!-- Customer Info -->
+    <section class="customer-info">
+      <div class="row">
+        <label>ชื่อ <input type="text"></label>
+        <label>นามสกุล <input type="text"></label>
+        <label>อาชีพ <input type="text"></label>
+      </div>
+      <div class="row">
+        <label>ที่อยู่ <input type="text"></label>
+        <label>เบอร์ <input type="text"></label>
+        <label>สินค้า <input type="text"></label>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>งวด</th>
+            <th>วันที่</th>
+            <th>จำนวน</th>
+            <th>คงเหลือ</th>
+            <th>ผู้รับเงิน</th>
+            <th>หมายเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td><td><input type="date"></td><td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td></td><td><input type="date"></td><td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td></td><td><input type="date"></td><td></td><td></td><td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Buttons -->
+    <div class="actions">
+      <button class="btn-primary">ส่งข้อมูล</button>
+      <button class="btn-secondary">ไปหน้าต่อไป</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      วันที่สร้าง <input type="date">
+    </footer>
+  </div>
+</body>
 </html>
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <style>
-    body {
-      background-color:#E2E2B6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .loginBtn {
-      background-color: #6EACDA;
-      color: #021526;
-      font-size: 24px;
-      padding: 15px 30px;
-      border: none;
-    }
-    .loginBtn:hover {
-    background-color: #03346E;
-  }
-  </style>
-</head>
-<body>
-  <button class="loginBtn">Login</button>
-  <button class="loginBtn">Signin</button>
-</body>
-  <a href="Manager.html">
-    <button>ค้นหา</button>
-  </a> -->
-
-
-  
-
-
-
-  <!-- <!DOCTYPE html>
-<html>
-<head>
-<title>Two Centered Buttons</title>
-<style>
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-
-  .button-container {
-    display: flex;
-    gap: 20px; /* Adds space between the buttons */
-  }
-
-  .my-button {
-    font-size: 24px; /* Makes the button text larger */
-    padding: 15px 30px; /* Increases the button size */
-    cursor: pointer;        ---------
-    border: none;
-    border-radius: 8px;
-    background-color: #007BFF;
-    color: white;
-    transition: background-color 0.3s;
-  }
-
-  .my-button:hover {
-    background-color: #0056b3;
-  }
-</style>
-</head>
-<body>
-
-<div class="button-container">
-  <button class="my-button">ปุ่มที่ 1</button>
-  <button class="my-button">ปุ่มที่ 2</button>
-</div>
-
-</body>
-</html> -->
-
-
-<!-- <!DOCTYPE html>
-<html lang="th">
-<head>
-  <meta charset="UTF-8">
-  <title>ค้นหาลูกค้า</title>
-  <script type="module">
-    // ------------------ Firebase Config ------------------
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAjgWD2Px4Fnh5x7dasYBO1uTyMD6HUR0",
-  authDomain: "webjj-376d9.firebaseapp.com",
-  databaseURL: "https://webjj-376d9-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "webjj-376d9",
-  storageBucket: "webjj-376d9.appspot.com",
-  messagingSenderId: "717462816877",
-  appId: "1:717462816877:web:3e1d003f38ab7c70b29764",
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // ------------------ ฟังก์ชันค้นหา ------------------
-    async function searchData() {
-      const keyword = document.getElementById("keyword").value.trim().toLowerCase();
-      const dateKeyword = document.getElementById("dateKeyword").value.trim();
-
-      const dbRef = ref(db);
-      const snapshot = await get(child(dbRef, "customers")); // customers = ชื่อตาราง
-      let resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = "";
-
-      if (snapshot.exists()) {
-        let customers = snapshot.val();
-        let resultArray = Object.values(customers);
-
-        // filter ข้อมูล
-        let filtered = resultArray.filter(cust => {
-          let matchKeyword = !keyword || (
-            (cust.firstname && cust.firstname.toLowerCase().includes(keyword)) ||
-            (cust.lastname && cust.lastname.toLowerCase().includes(keyword)) ||
-            (cust.address && cust.address.toLowerCase().includes(keyword))
-          );
-
-          let matchDate = !dateKeyword || (cust.date && cust.date.includes(dateKeyword));
-
-          return matchKeyword && matchDate;
-        });
-
-        // แสดงผล
-        if (filtered.length > 0) {
-          filtered.forEach((cust, index) => {
-            resultsDiv.innerHTML += `
-              <div style="border:1px solid #ccc; margin:5px; padding:5px;">
-                <b>#${index + 1}</b><br>
-                ชื่อ: ${cust.firstname} ${cust.lastname}<br>
-                ที่อยู่: ${cust.address}<br>
-                วันที่: ${cust.date}
-              </div>
-            `;
-          });
-        } else {
-          resultsDiv.innerHTML = "<p>ไม่พบข้อมูล</p>";
-        }
-
-      } else {
-        resultsDiv.innerHTML = "<p>ยังไม่มีข้อมูลในระบบ</p>";
-      }
-    }
-
-    window.searchData = searchData;
-  </script>
-</head>
-<body>
-  <h2>ค้นหาลูกค้า</h2>
-  <input type="text" id="keyword" placeholder="พิมพ์ชื่อ / นามสกุล / ที่อยู่">
-  <input type="text" id="dateKeyword" placeholder="ค้นหาตามวันที่ (yyyy-mm-dd)">
-  <button onclick="searchData()">ค้นหา</button>
-  <div id="results" style="margin-top:20px;"></div>
-</body>
-</html> -->
-
-
-
